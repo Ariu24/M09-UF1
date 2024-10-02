@@ -12,9 +12,10 @@ public class Monoalfabetic {
     };
     public static final char[]abecedariXifat= permutaAlfabet(ABECEDARI);
     public static void main(String[] args) {
-        System.out.println(abecedariXifat);
-        System.out.println(xifraMonoAlfa("àOla"));
-        System.out.println(desxifraMonoAlfa(xifraMonoAlfa("àOla")));
+        System.out.println("Aquest es l'ABECEDARI xifrat" + Arrays.toString(abecedariXifat));
+        System.out.println("Introdueix un text per xifrar:");
+        System.out.println("Text xifrat: " + xifraMonoAlfa("Hòls"));
+        System.out.println("Text desxifrat: "+desxifraMonoAlfa(xifraMonoAlfa("Hòls")));
     }
     public static String xifraMonoAlfa(String text){
         return intercanvia(text,ABECEDARI,abecedariXifat);
