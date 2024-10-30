@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Random;
 
 public class XifradorPolialfabetic implements Xifrador{
+    
     public static final char[]ABECEDARI = {
         'a', 'à', 'á', 'ä', 'b', 'c', 'ç', 'd', 'e', 'è', 'é', 'ë', 
         'f', 'g', 'h', 'i', 'í', 'ï', 'j', 'k', 'l', 'm', 'n', 'ñ', 
@@ -47,9 +48,14 @@ public class XifradorPolialfabetic implements Xifrador{
         return new TextXifrat(resultByte);
     }
     public String desxifra(TextXifrat xifrat, String clau) throws ClauNoSuportada{
+        try {
+            int clau2 = Integer.parseInt(clau);
+            initRandom(clau2);
+        } catch (NumberFormatException e) {
+            System.out.println("La clau per xifrat Polialfabètic ha de ser un String convertible a long");
+        }
         String text = xifrat.toString();
-        int clau2 = Integer.parseInt(clau);
-        String resultat = desxifraRot13(text, clau2);
+        String resultat = desxifraPoliAlfa(text);
         return resultat;
     }
     public void permutaAlfabet(){
@@ -65,7 +71,7 @@ public class XifradorPolialfabetic implements Xifrador{
         }
     }
 
-    public String xifraPoliAlfa( String msg ){
+    public String xifraPoliAlfa(String msg){
         String resultat = "";
         for(int i = 0; i<msg.length();i++){
             char carAct = msg.charAt(i);

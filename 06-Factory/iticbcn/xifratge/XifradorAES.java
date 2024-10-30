@@ -93,4 +93,26 @@ public class XifradorAES implements Xifrador {
         return new String(decrypted, "UTF-8");
     }
     
+    public TextXifrat xifra(String msg, String clau) throws ClauNoSuportada{
+        try{
+            byte [] resultByte = xifraAES(msg, clau);
+            return new TextXifrat(resultByte);
+        }catch(Exception e){
+            System.out.println("Error: " + e.getMessage());
+        }
+        return null;  
+    }
+    public String desxifra(TextXifrat xifrat, String clau) throws ClauNoSuportada{
+        String text = xifrat.toString();
+        byte[] textX = text.getBytes();
+        try{
+            String resultat = desxifraAES(textX, clau);
+            return resultat;
+        }catch(Exception e){
+            System.out.println("Error: " + e.getMessage());
+        }
+        return "";
+        
+    }
+    
 }

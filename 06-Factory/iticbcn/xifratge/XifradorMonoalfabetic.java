@@ -61,4 +61,22 @@ public class XifradorMonoalfabetic implements Xifrador{
         }
         return abcPermutat;
     }
+
+    public TextXifrat xifra(String msg, String clau) throws ClauNoSuportada{
+        if(clau !=null){
+            throw new ClauNoSuportada("Xifratxe monoalfabètic no suporta clau != null");
+        }else{
+            String resultat = xifraMonoAlfa(msg);
+            byte [] resultByte = resultat.getBytes();
+            return new TextXifrat(resultByte);
+        }
+    }
+    public String desxifra(TextXifrat xifrat, String clau) throws ClauNoSuportada{
+        if(clau !=null){
+            throw new ClauNoSuportada("Xifratxe monoalfabètic no suporta clau != null");
+        }
+        String text = xifrat.toString();
+        String resultat = desxifraMonoAlfa(text);
+        return resultat;
+    }
 }
