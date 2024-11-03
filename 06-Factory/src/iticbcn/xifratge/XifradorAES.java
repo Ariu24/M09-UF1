@@ -3,7 +3,6 @@ package iticbcn.xifratge;
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.*;
-import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 
 import javax.crypto.spec.IvParameterSpec;
@@ -14,26 +13,7 @@ public class XifradorAES implements Xifrador {
 
     private final int MIDA_IV = 16;
     private byte[] iv = new byte[MIDA_IV];
-    private final String CLAU = "yagito";
 
-    public void main(String[] args) {
-        String msgs[] = {"Lorem ipsum dicet","Hola Andrés cómo está tu cuñado","Àgora ïlla Ôtto"};
-        for (int i = 0; i < msgs.length; i++) {
-            String msg = msgs[i];
-            byte[] bXifrats = null;
-            String desxifrat = "";
-            try {
-            bXifrats = xifraAES(msg, CLAU);
-            desxifrat = desxifraAES (bXifrats, CLAU);
-        } catch (Exception e) {
-            System.err.println("Error de xifrat: "+ e.getLocalizedMessage ());
-        }   
-        System.out.println("--------------------" );
-        System.out.println("Msg: " + msg);
-        System.out.println("Enc: " + new String(bXifrats));
-        System.out.println("DEC: " + desxifrat);
-        }
-    }
     public byte[] xifraAES(String msg, String clau) throws Exception {
         // Obtener bytes del mensaje
         byte[] bytes = msg.getBytes("UTF-8");
@@ -95,23 +75,20 @@ public class XifradorAES implements Xifrador {
     
     public TextXifrat xifra(String msg, String clau) throws ClauNoSuportada{
         try{
-            byte [] resultByte = xifraAES(msg, clau);
-            return new TextXifrat(resultByte);
+            return new TextXifrat(xifraAES(msg, clau));
         }catch(Exception e){
             System.out.println("Error: " + e.getMessage());
         }
         return null;  
     }
     public String desxifra(TextXifrat xifrat, String clau) throws ClauNoSuportada{
-        String text = xifrat.toString();
-        byte[] textX = text.getBytes();
         try{
-            String resultat = desxifraAES(textX, clau);
+            String resultat = desxifraAES(xifrat.getBytes(), clau);
             return resultat;
         }catch(Exception e){
             System.out.println("Error: " + e.getMessage());
         }
-        return "";
+        return null;
         
     }
     
